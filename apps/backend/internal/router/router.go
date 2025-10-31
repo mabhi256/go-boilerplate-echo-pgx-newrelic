@@ -9,6 +9,7 @@ import (
 	"github.com/mabhi256/go-boilerplate-echo-pgx-newrelic/internal/middleware"
 	"github.com/mabhi256/go-boilerplate-echo-pgx-newrelic/internal/server"
 	"github.com/mabhi256/go-boilerplate-echo-pgx-newrelic/internal/service"
+	"github.com/mabhi256/go-boilerplate-echo-pgx-newrelic/internal/validation"
 	"golang.org/x/time/rate"
 )
 
@@ -16,6 +17,7 @@ func NewRouter(s *server.Server, h *handler.Handlers, services *service.Services
 	middlewares := middleware.NewMiddlewares(s)
 
 	router := echo.New()
+	router.Binder = &validation.CustomBinder{}
 
 	router.HTTPErrorHandler = middlewares.Global.GlobalErrorHandler
 
